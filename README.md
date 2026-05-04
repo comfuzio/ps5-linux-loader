@@ -177,14 +177,20 @@ Then, there are certain settings and commands we recommend doing:
 
    ```bash
    sudo snap install firefox
+   ```
+
+4. Update mesa:
+
+   ```bash
    sudo snap refresh mesa-2404 --channel=latest/edge
    ```
 
-4. Clone our [ps5-linux-tools](https://github.com/ps5-linux/ps5-linux-tools):
+5. Clone our [ps5-linux-tools](https://github.com/ps5-linux/ps5-linux-tools):
 
    ```bash
    sudo apt install zlib1g-dev
    git clone https://github.com/ps5-linux/ps5-linux-tools
+   cd ps5-linux-tools
    make
    ```
 
@@ -217,6 +223,8 @@ cd ps5-linux-tools
 chmod +x ./m2_exec.sh
 sudo ./m2_exec.sh
 ```
+
+Then follow the same instructions again as the previous section.
 
 In order to always boot Linux from your M.2, you can edit the label at `/boot/efi/cmdline.txt` from `root=LABEL=ubuntu2604` to `root=LABEL=ubuntu2604-m2`.
 
@@ -258,6 +266,7 @@ Always turn on fan when your turn on boost, as this is what the official PS5 OS 
 - Some monitors have a black screen if a video=DP-1: parameter is set in `cmdline.txt`. Confirmed working without `video=DP-1:1920x1080@60` on:
   - MSI MAG274Q QD E2, DELL S2721DGF, DELL U2515H (1440p@60Hz)
   - Possibly also: LG 27GL850, Lenovo Legion Y27q, ViewSonic Elite XG270QG
+
 Many configurations, tips and tricks from the [AMD BC250 Documentation](https://elektricm.github.io/amd-bc250-docs/) also apply to PS5.
 
 ## Bugs
