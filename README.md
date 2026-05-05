@@ -198,8 +198,9 @@ Then, there are certain settings and commands we recommend doing:
 
 You can use a M.2 SSD exclusively for Linux (which means you cannot use it for PS5 game storage).
 
-1. Attach the M.SSD and format it on your PS5.
-2. Boot Linux on your PS5 and run these commands to initialize your M.2:
+1. Attach the M.2 SSD by following the [official guide](https://www.playstation.com/en-us/support/hardware/ps5-install-m2-ssd).
+2. **VERY IMPORTANT**: If you used the M2. SSD for games before, reformat it on the PS5 under `Settings` → `Storage` → `M.2 SSD Storage`.
+3. Boot Linux on your PS5 and run these commands to initialize your M.2:
 
 ```bash
 cd ps5-linux-tools
@@ -260,6 +261,7 @@ Always turn on fan when your turn on boost, as this is what the official PS5 OS 
 
 ## Tips and tricks
 
+- If you see graphical issues in your games, add the environment variable `RADV_DEBUG=nohiz` as [recommended for BC250](https://elektricm.github.io/amd-bc250-docs/drivers/environment/#critical-environment-variables) as well.
 - You can adjust the kernel cmdline in `cmdline.txt` in the FAT32 partition.
 - You can adjust the VRAM size in `vram.txt` in the FAT32 partition. By default, it uses 512MB (0x20000000) which enables [Dynamic VRAM allocation](https://elektricm.github.io/amd-bc250-docs/bios/flashing/#why-flash-the-bios).
 - Monitor hotswap may work, but it will not change resolution automatically.
