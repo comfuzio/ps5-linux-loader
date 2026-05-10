@@ -1,6 +1,6 @@
 # ps5-linux
 
-**ps5-linux** leverages a patched HV vulnerability to transform your PS5 Phat console running **3.xx or 4.xx firmwares** into a highly capable Linux PC, unlocking its full hardware potential for desktop use. Powered by 8 CPU cores (16 threads) at **3.5 GHz** and a GPU at **2.23 GHz**, it provides enough performance to run Steam games and various emulators with impressive fluidity. It supports HDMI 4K60 video and audio output. Furthermore, it allows you to utilize an **M.2 SSD** as a dedicated Linux partition, as well as all USB ports on the console.
+**ps5-linux** leverages a patched HV vulnerability to transform your PS5 Phat console running **3.xx or 4.xx firmwares** (and soon also on **firmware 6.02**) into a highly capable Linux PC, unlocking its full hardware potential for desktop use. Powered by 8 CPU cores (16 threads) at **3.5 GHz** and a GPU at **2.23 GHz**, it provides enough performance to run Steam games and various emulators with impressive fluidity. It supports HDMI 4K60 video and audio output. Furthermore, it allows you to utilize an **M.2 SSD** as a dedicated Linux partition, as well as all USB ports on the console.
 
 ![Alt Text](logo.webp)
 
@@ -8,14 +8,13 @@
 
 *ps5-linux* is currently only supported on PS5 Phat on 3.xx and 4.xx firmwares.
 
-- **3.00**, **3.10**, **3.20**, **3.21**, without M.2 support
+- **3.00**, **3.10**, **3.20**, **3.21** without M.2 support
 - **4.00**, **4.02**, **4.03**, **4.50**, **4.51** with M.2 support
+- **Soon: 6.02** with M2 support
 
 Support for 1.xx and 2.xx firmwares may be added in the future, but we will not prioritize this effort.
 
-Support for 5.xx firmwares may be added in the future, but for those firmwares, Linux will run within the GameOS VM, thus it will have less features (still unknown what limitations there will be) and it may not perform as good.
-
-If you want to update to a specific firmware, [download the correct PUP](https://darthsternie.net/ps5-firmwares/) and follow the [official guide](https://www.playstation.com/en-us/support/hardware/reinstall-playstation-system-software-safe-mode) to upgrade your PS5.
+If you want to update to a specific firmware, [download the correct PUP](https://darthsternie.net/ps5-firmwares/) and follow the [official guide](https://www.playstation.com/en-us/support/hardware/reinstall-playstation-system-software-safe-mode) to upgrade your PS5. Obviously you cannot downgrade.
 
 ## Hardwares
 
@@ -30,14 +29,16 @@ To run *ps5-linux*, you need some required and optional hardwares:
 
 ## Configure PS5 settings
 
-- **Required**: Enable Rest Mode features:
+- **VERY IMPORTANT**: Enable Rest Mode features:
   - Go to `Settings` → `System` → `Power Saving` → `Features Available in Rest Mode` and set `Supply Power to USB Ports` to `Always`.
-- **Required**: Disable HDMI Device Link:
+- **VERY IMPORTANT**: Disable HDMI Device Link:
   - Go to `Settings` → `HDMI` → `Enable HDMI Device Link`
 - *Recommended*: Disable automatic updates:
   - Go to `Settings` → `System Software` → `System Software Update and Settings`
 - *Recommended*: Disable automatic error reporting:
   - Go to `Settings` → `System Software` → `Report System Software Errors Automatically`
+
+If you reset your PS5 settings or reinstall the FW, you need to reapply these settings again.
 
 ## Installation
 
@@ -110,7 +111,7 @@ sudo dd if=output/ps5-ubuntu2604.img of=/dev/sdX bs=4M status=progress conv=fsyn
 
 #### Windows (Balena Etcher):
 
-Download [Balena Etcher](https://etcher.balena.io/), select the .img file, select your USB drive, click Flash.
+Download [Balena Etcher](https://etcher.balena.io/), select the `.img` file, select your USB drive, click Flash.
 
 ### 3. Plug the USB drive into your PS5
 
@@ -138,9 +139,8 @@ git clone https://github.com/ps5-linux/ps5-linux-loader
 cd ps5-linux-loader
 make
 ```
-## Compiling on ARM64 Linux
 
-Install the x86-64 cross-compilation tools before:
+If you're on ARM64 Linux, then additionall install the x86-64 cross-compilation tools before:
 
 ```bash
 sudo apt install gcc-x86-64-linux-gnu binutils-x86-64-linux-gnu
@@ -188,6 +188,9 @@ Then, there are certain settings and commands we recommend doing:
 
    ```bash
    sudo snap refresh mesa-2404 --channel=latest/edge
+   sudo add-apt-repository ppa:kisak/kisak-mesa
+   sudo apt update
+   sudo apt upgrade
    ```
 
 6. Clone our [ps5-linux-tools](https://github.com/ps5-linux/ps5-linux-tools):
@@ -232,7 +235,7 @@ sudo ./m2_exec.sh
 
 Then follow the same instructions again as the previous section.
 
-In order to always boot Linux from your M.2, you can edit the label at `/boot/efi/cmdline.txt` from `root=LABEL=ubuntu2604` to `root=LABEL=ubuntu2604-m2`.
+In order to always boot Linux from your M.2, you can edit the label at `/boot/efi/cmdline.txt` from `root=LABEL=ubuntu2604` to `root=LABEL=ubuntu2604-m2`. You will still require a USB drive with the FAT32, but you can reformat the ext4 partition.
 
 ## Fan & boost control
 
@@ -256,7 +259,7 @@ Always turn on fan when your turn on boost, as this is what the official PS5 OS 
   - A: Yes, the internal SSD is not modified
 - Q: Can I use the PS5's NIC/WLAN module in Linux?
   - A: In theory yes, but someone needs to write or adapt drivers to use them.
-- Q: Will higher >=6.xx firmwares be supported?
+- Q: Will higher >=6.50 firmwares be supported?
   - A: No.
 - Q: Does the DualSense controller work?
   - A: Via a Bluetooth dongle. Built-in Bluetooth is not yet supported.
